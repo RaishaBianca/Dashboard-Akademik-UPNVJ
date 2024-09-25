@@ -1,0 +1,165 @@
+/* define custom styles */
+:root {
+  --dark: #0C0C0C;
+  --light: #fafbfd;
+  --primary: #e9f1fc;
+  --secondary: #090979;
+  --tertiary : #060160;
+  --lightgrey: #f0f0f0;
+  --grey: #c8d1da;
+  --darkgrey: #5c6062;
+
+}
+
+/* CSS configuration reset */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* Custom CSS */
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+#LoginPage {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    background-color: #ffffff;
+}
+
+.left {
+  color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: start;
+  height: 100%;
+  gap: 1rem;
+  background: 
+  url('./assets/login.svg') no-repeat bottom left, 
+  linear-gradient(0deg, rgba(6,1,96,1) 0%, rgba(9,9,121,1) 15%, rgba(0,187,225,1) 100%);
+  background-size: 35%, cover;
+  width: 60%;
+}
+
+.left h1 {
+  padding-left: 25%;
+  font-weight: bold;
+  font-size: 2rem; 
+  margin-bottom: 0.5rem; 
+}
+
+.left h4 {
+  padding-left: 25%;
+  padding-bottom: 10%;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--dark);
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border : 1px solid #000000;
+  height: 100%;
+  width: 40%;
+}
+
+.form-div {
+  border: 1px solid #00000022;
+  padding: 4rem;
+  padding-inline: 5rem;
+  box-shadow: 10px 10px 20px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.form-div form {
+  display: flex;
+  margin-top: 2rem;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.submit-button {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top:1rem;
+}
+
+.submit-button:hover {
+  background-color: #000000aa;
+}
+
+.layout {
+    background-color: var(--primary);
+    display: flex;
+    height: 100vh;
+}
+
+.content {
+    margin-left: 250px;
+    flex: 1;
+    padding: 1rem;
+    padding-inline: 2rem;
+    overflow-y: auto;
+}
+
+/* Stat peminjaman styles */
+.dashboard-title {
+    padding: 2rem;
+}
