@@ -59,7 +59,7 @@ const Sidebar = ({ page }) => {
         </div>
         <ul className="sidebar-list">
           <li className="sidebar-list-item">
-            <NavLink to="/dashboard" className="sidebar-link">
+            <NavLink to="/dashboard" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
               <FontAwesomeIcon icon={faChartColumn} className=" menu-icon" />
               <span>Stat Peminjaman</span>
             </NavLink>
@@ -125,7 +125,7 @@ const StyledWrapper = styled.div`
   }
 
   .sidebar-list-item {
-    margin-bottom: 10px;
+    border-bottom: 1px solid var(--lightgrey);
   }
 
   .sidebar-link {
@@ -135,17 +135,21 @@ const StyledWrapper = styled.div`
     text-decoration: none;
     gap: 10px;
     font-size: 0.9rem;
-    padding: 0.5rem 1rem; 
+    padding: 1rem;
     font-weight: 500;
-    transition: 0.3s;
+    transition: background-color 0.4s linear;
   }
 
   .sidebar-link:hover {
-    background-color: #303f9f;
+    background-color: var(--lightgrey);
   }
 
   .sidebar-link i {
     margin-right: 10px;
+  }
+
+  .sidebar-link.active {
+    background-color: var(--lightgrey);
   }
 
   .icon {

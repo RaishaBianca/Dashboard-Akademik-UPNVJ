@@ -159,7 +159,63 @@ body {
     overflow-y: auto;
 }
 
+.main {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
 /* Stat peminjaman styles */
-.dashboard-title {
-    padding: 2rem;
+
+.dash-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.date-picker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.angka-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-block: 2.5rem 4rem;
+}
+
+.angka-total h2 {
+  opacity: 0.5;
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--dark);
+}
+
+.angka-total p {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.angka-total-item {
+  background-color: var(--light);
+  border: 1px solid var(--grey);
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+.display {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Daftar Konfirmasi Styles */
+
+.konfirmasi .title {
+  margin-top: 1rem;
 }
