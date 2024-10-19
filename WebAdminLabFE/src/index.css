@@ -3,12 +3,13 @@
   --dark: #0C0C0C;
   --light: #fafbfd;
   --primary: #e9f1fc;
-  --secondary: #090979;
+  --secondary: #001D6C;
   --tertiary : #060160;
   --lightgrey: #f0f0f0;
   --grey: #c8d1da;
   --darkgrey: #5c6062;
-
+  --alert: #ff3636;
+  --safe: #07b491;
 }
 
 /* CSS configuration reset */
@@ -216,6 +217,103 @@ body {
 
 /* Daftar Konfirmasi Styles */
 
-.konfirmasi .title {
-  margin-top: 1rem;
+.konfirm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-block: 1rem 1.5rem;
+  border-bottom: var(--grey) 1px solid;
+}
+
+
+.search-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  background-color:var(--light);
+  border-radius: 0 5px 5px 0;
+}
+
+.search-field-main {
+  border: none;
+}
+
+.search-icon-main {
+  background-color: var(--secondary);
+  color: var(--light);
+  border: none;
+  padding: 1rem ;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+
+.find-filter {
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.filter {
+  position: relative;
+  border: var(--secondary) 2px solid;
+  color: var(--secondary);
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.filter-icon {
+  margin-right: 0.5rem;
+  cursor: pointer;
+} 
+
+
+.filter-box {
+  display: none;
+  position: absolute;
+  top: 3rem;
+  padding: 1.4rem;
+  left: 0;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--grey);
+  font-size: 0.8rem;
+  flex-direction: column;
+  position: absolute;
+  background-color: var(--light);
+  z-index: 1;
+}
+
+
+/* kelas komponen jadwal */
+.jadwal-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-block: 1rem 1.5rem;
+  border-bottom: var(--grey) 1px solid;
+}
+
+.jadwal-choice {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.room-options {
+  border: 0px;
+  background-color: transparent;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+}
+
+.room-dropdown {
+  border: 1px solid var(--grey);
+  padding: 0.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  background-color: var(--light);
 }

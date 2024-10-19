@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser, faGear, faSearch, faChartColumn, faListCheck, faCalendarAlt, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 
-const Sidebar = ({ page }) => {
+const Sidebar = () => {
   const [isUserActionVisible, setIsUserActionVisible] = useState(false);
   const userActionRef = useRef(null);
   const userIconRef = useRef(null);

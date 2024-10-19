@@ -1,6 +1,8 @@
-// ../partials/Table.jsx
 import React from 'react';
 import { useTable, useSortBy, usePagination } from 'react-table';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAlignCenter, faEllipsis } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components';
 
 const DataTable = ({ columns, data }) => {
   const {
@@ -26,40 +28,58 @@ const DataTable = ({ columns, data }) => {
   );
 
   return (
-    <>
-      <table {...getTableProps()}>
+    <StyledWrapper>
+      <table {...getTableProps()} className='table-main'>
         <thead>
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  {column.render('Header')}
-                  <span>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? ' 🔽'
-                        : ' 🔼'
-                      : ''}
-                  </span>
-                </th>
-              ))}
-            </tr>
-          ))}
+          {headerGroups.map(headerGroup => {
+            const { key, ...rest } = headerGroup.getHeaderGroupProps();
+            return (
+              <tr key={key} {...rest}>
+                {headerGroup.headers.map(column => {
+                  const { key: columnKey, ...columnRest } = column.getHeaderProps(column.getSortByToggleProps());
+                  return (
+                    <th key={columnKey} {...columnRest}>
+                      {column.render('Header')}
+                      <span>
+                        {column.isSorted
+                          ? column.isSortedDesc
+                            ? ' 🔽'
+                            : ' 🔼'
+                          : ''}
+                      </span>
+                    </th>
+                  );
+                })}
+                <th className='detail-column'></th>
+              </tr>
+            );
+          })}
         </thead>
         <tbody {...getTableBodyProps()}>
           {page.map(row => {
             prepareRow(row);
+            const { key, ...rest } = row.getRowProps();
             return (
               <tr {...row.getRowProps()}>
-                {row.cells.map(cell => (
-                  <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                ))}
-              </tr>
+              {row.cells.map(cell => {
+                if (cell.column.id === 'kon') {
+                  return (
+                    <td {...cell.getCellProps()} style={{ textAlign: 'center', verticalAlign: 'middle' , width:120}}>
+                      <div className={`status-${cell.value} status`}>{cell.render('Cell')}</div>
+                    </td>
+                  );
+                }
+                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+              })}
+              <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>
+                <button className='more-button'><FontAwesomeIcon icon={faEllipsis} /> </button>
+              </td>
+            </tr>
             );
           })}
         </tbody>
       </table>
-      <div>
+      <div className='paging'>
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<<'}
         </button>
@@ -91,8 +111,115 @@ const DataTable = ({ columns, data }) => {
           ))}
         </select>
       </div>
-    </>
+      </StyledWrapper>
   );
 };
+
+const StyledWrapper = styled.div`
+  .table-main {
+    font-size: 14px;
+    width: 100%;
+    border-collapse: collapse;
+    margin-block: 20px;
+  }
+
+  .table-main th {
+    background-color: var(--secondary);
+    color: var(--light);
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  .table-main td {
+    border: 1px solid var(--lightgrey);
+    text-align: left;
+    padding: 10px;
+    cursor: default;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    max-width: 200px;
+    font-size: 0.8rem;
+  }
+
+  .table-main tr:nth-child(even) {
+    background-color: var(--light);
+  }
+
+  .table-main tr:hover {
+    background-color: var(--lightgrey);
+  }
+
+  button {
+    margin: 5px;
+  }
+
+  select {
+    margin: 5px;
+  }
+
+  .status {
+    color: var(--light);
+    padding: 0.5rem 0.2rem;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 24px;
+    font-size: 0.7rem;
+    text-align: center;
+    font-weight: 500;
+    max-width: 100px;
+  }
+
+  .status-new {
+    background-color: var(--grey);
+    color: var(--dark);
+  }
+  
+  .status-accepted {
+    background-color: var(--safe);
+  }
+  
+  .status-rejected {
+    background-color: var(--alert);
+  }
+
+  .more-button {
+    background-color: transparent;
+    color: var(--dark);
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 0.7rem;
+    max-width: 50px;
+  }
+
+  .paging {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-block: 1rem;
+    font-size: 0.8rem;
+  }
+
+  .paging button {
+    background-color: var(--light);
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+  }
+
+  .paging select {
+    background-color: var(--light);
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+  }
+`;
+
 
 export default DataTable;
