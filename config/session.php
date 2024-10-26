@@ -18,7 +18,7 @@ return [
     |
     */
 
-    'driver' => env('SESSION_DRIVER', 'database'),
+    'driver' => 'null',
 
     /*
     |--------------------------------------------------------------------------
@@ -73,7 +73,12 @@ return [
     |
     */
 
-    'connection' => env('SESSION_CONNECTION'),
+    
+    'connection' => env('SESSION_CONNECTION', null),
+
+
+    'foreign_key' => 'id_user',
+    
 
     /*
     |--------------------------------------------------------------------------
@@ -86,7 +91,15 @@ return [
     |
     */
 
-    'table' => env('SESSION_TABLE', 'sessions'),
+    'table' => 'sessions',
+    'columns' => [
+        'id' => 'id',
+        'user_id' => 'id_user', // Update this line
+        'ip_address' => 'ip_address',
+        'user_agent' => 'user_agent',
+        'payload' => 'payload',
+        'last_activity' => 'last_activity',
+    ],
 
     /*
     |--------------------------------------------------------------------------
