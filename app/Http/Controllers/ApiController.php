@@ -9,23 +9,6 @@ use Illuminate\Support\Facades\Hash;
 
 class ApiController extends Controller
 {
-    public function getAllUsers()
-    {
-        $users = User::all();
-
-        // Create a response
-        $response = response()->json($users, 200);
-
-        // Log the headers
-        $response->header('Access-Control-Allow-Origin', '*');
-        $response->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-        $response->header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
-        Log::info('Response Headers', $response->headers->all());
-        Log::info('CORS Configuration', config('cors'));
-        // Return the response
-        return $response;
-    }
 
     public function login(Request $request)
     {
