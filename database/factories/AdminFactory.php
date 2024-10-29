@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,18 +18,22 @@ class AdminFactory extends Factory
      */
     public function definition(): array
     {
-        $adminIds = [1,2,3];
+        $adminIds = [1,2];
+        $password = 'password';
+        Log::info('Admin password: ' . $password);
         return [
             'id_admin' => $this->faker->regexify('[A-Za-z0-9]{30}'),
             'nama' => $this->faker->name,
             'no_tlp' => $this->faker->regexify('[0-9]{20}'),
             'email' => $this->faker->unique()->safeEmail,
-            'password' => Hash::make('password'),
+            'password'=> Hash::make($password),
             'id_peran' => $this->faker->randomElement($adminIds),
             'remember_token' => $this->faker->regexify('[A-Za-z0-9]{100}'),
             'dibuat_pada' => $this->faker->dateTime(),
             'dimodif_pada' => $this->faker->dateTime(),
         ];
+
+        Log::info('AdminFactory');
 
     }
 

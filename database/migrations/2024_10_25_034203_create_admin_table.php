@@ -11,26 +11,25 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::create('peran_admin', function (Blueprint $table) {
+            $table->integer('id_peran')->primary(); 
+            $table->string('nama_peran');
+            $table->string('deskripsi_peran');
+        });
+        
         Schema::create('admin', function (Blueprint $table) {
             $table->string('id_admin',30)->primary();
             $table->string('nama');
             $table->string('no_tlp', 20);
             $table->string('email')->unique();
             $table->string('password');
-            $table->int('id_peran');
+            $table->integer('id_peran');
             $table->string('remember_token', 100)->nullable();
             $table->dateTime('dibuat_pada');
             $table->dateTime('dimodif_pada');
 
             $table->foreign('id_peran')->references('id_peran')->on('peran_admin');
         });
-
-        Schema::create('peran_admin', function (Blueprint $table) {
-            $table->integer('id_peran')->primary(); 
-            $table->string('nama_peran');
-            $table->string('deskripsi_peran');
-        });
-
 
     }
 

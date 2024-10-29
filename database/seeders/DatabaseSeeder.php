@@ -4,8 +4,11 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\Gedung;
+use App\Models\Ruangan;
 use App\Models\PeranUser;
 use App\Models\PeranAdmin;
+use App\Models\PinjamRuang;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,6 +18,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        if (env('APP_ENV') === 'production') {
+            exit('I just stopped you getting fired. Love, Laravel');
+        }
 
         PeranUser::insert([
             [
@@ -65,51 +71,59 @@ class DatabaseSeeder extends Seeder
             ],
             ]);
 
-        Ruangan::insert([
-            [
-                'id_ruang' => 'A1',
-                'id_gedung' => 'A',
-                'nama_ruang' => 'Ruang A1',
-                'deskripsi' => 'Ruang A1 adalah ruangan yang berada di lantai 1 gedung A',
-                'jam_tersedia' => '07:00-17:00',
-                'kapasitas' => 50,
-                'status' => 'Tersedia',
-            ],
-            [
-                'id_ruang' => 'A2',
-                'id_gedung' => 'A',
-                'nama_ruang' => 'Ruang A2',
-                'deskripsi' => 'Ruang A2 adalah ruangan yang berada di lantai 2 gedung A',
-                'jam_tersedia' => '07:00-17:00',
-                'kapasitas' => 50,
-                'status' => 'Tersedia',
-            ],
-            [
-                'id_ruang' => 'B1',
-                'id_gedung' => 'B',
-                'nama_ruang' => 'Ruang B1',
-                'deskripsi' => 'Ruang B1 adalah ruangan yang berada di lantai 1 gedung B',
-                'jam_tersedia' => '07:00-17:00',
-                'kapasitas' => 50,
-            ],
-            [
-                'id_ruang' => 'B2',
-                'id_gedung' => 'B',
-                'nama_ruang' => 'Ruang B2',
-                'deskripsi' => 'Ruang B2 adalah ruangan yang berada di lantai 2 gedung B',
-                'jam_tersedia' => '07:00-17:00',
-                'kapasitas' => 50,
-            ],
-            [
-                'id_ruang' => 'C1',
-                'id_gedung' => 'C',
-                'nama_ruang' => 'Ruang C1',
-                'deskripsi' => 'Ruang C1 adalah ruangan yang berada di lantai 1 gedung C',
-                'jam_tersedia' => '07:00-17:00',
-                'kapasitas' =>  50,
-            ]]);
+            Ruangan::insert([
+                [
+                    'id_ruang' => 'A1',
+                    'id_gedung' => 'A',
+                    'nama_ruang' => 'Ruang A1',
+                    'deskripsi' => 'Ruang A1 adalah ruangan yang berada di lantai 1 gedung A',
+                    'jam_mulai' => '07:00:00', // Start time
+                    'jam_selesai' => '17:00:00', // End time
+                    'kapasitas' => 50,
+                ],
+                [
+                    'id_ruang' => 'A2',
+                    'id_gedung' => 'A',
+                    'nama_ruang' => 'Ruang A2',
+                    'deskripsi' => 'Ruang A2 adalah ruangan yang berada di lantai 2 gedung A',
+                    'jam_mulai' => '07:00:00', // Start time
+                    'jam_selesai' => '17:00:00', // End time
+                    'kapasitas' => 50,
+                ],
+                [
+                    'id_ruang' => 'B1',
+                    'id_gedung' => 'B',
+                    'nama_ruang' => 'Ruang B1',
+                    'deskripsi' => 'Ruang B1 adalah ruangan yang berada di lantai 1 gedung B',
+                    'jam_mulai' => '07:00:00', // Start time
+                    'jam_selesai' => '17:00:00', // End time
+                    'kapasitas' => 50,
+                ],
+                [
+                    'id_ruang' => 'B2',
+                    'id_gedung' => 'B',
+                    'nama_ruang' => 'Ruang B2',
+                    'deskripsi' => 'Ruang B2 adalah ruangan yang berada di lantai 2 gedung B',
+                    'jam_mulai' => '07:00:00', // Start time
+                    'jam_selesai' => '17:00:00', // End time
+                    'kapasitas' => 50,
+                ],
+                [
+                    'id_ruang' => 'C1',
+                    'id_gedung' => 'C',
+                    'nama_ruang' => 'Ruang C1',
+                    'deskripsi' => 'Ruang C1 adalah ruangan yang berada di lantai 1 gedung C',
+                    'jam_mulai' => '07:00:00', // Start time
+                    'jam_selesai' => '17:00:00', // End time
+                    'kapasitas' => 50,
+                ],
+            ]);
 
         Admin::factory(3)->create();
         User::factory(100)->create();
+
+        PinjamRuang::factory(100)->create([
+            'id_user' => User::factory(),
+        ]);
     }
 }

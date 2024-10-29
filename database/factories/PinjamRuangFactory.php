@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
+use App\Models\Ruangan;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,9 +18,15 @@ class PinjamRuangFactory extends Factory
      */
     public function definition(): array
     {
+        $Ruanganids = ['A1', 'A2', 'B1', 'B2', 'C1'];
         return [
-            'id_pinjam'=> $this->faker->regexify('[A-Za-z0-9]{30}'),
-            'id_user'=> $this->faker->regexify('[A-Za-z0-9]{30}'),
+            'id_user'=> User::factory(),
+            'id_ruang'=> $this->faker->randomElement($Ruanganids),
+            'tgl_pinjam'=> $this->faker->date(),
+            'jam_mulai'=> $this->faker->time(),
+            'jam_selesai'=> $this->faker->time(),
+            'keterangan'=> $this->faker->text(),
+            'status'=> $this->faker->randomElement(['pending', 'approved', 'rejected']),
         ];
     }
 }
