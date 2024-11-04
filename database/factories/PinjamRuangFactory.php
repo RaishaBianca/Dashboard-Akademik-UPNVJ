@@ -27,6 +27,7 @@ class PinjamRuangFactory extends Factory
             'jam_selesai'=> $this->faker->time(),
             'keterangan'=> $this->faker->text(),
             'status'=> $this->faker->randomElement(['pending', 'approved', 'rejected']),
+            'jumlah_orang'=> $this->faker->numberBetween(1, 100),
         ];
     }
 }

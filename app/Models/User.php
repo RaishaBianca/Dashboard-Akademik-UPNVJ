@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\PeranUser;
+use App\Models\PinjamRuang;
+use App\Models\LaporKendala;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -58,5 +60,13 @@ class User extends Authenticatable
 
     public function user(){
         return $this->belongsTo(PeranUser::class, 'id_peran', 'id_peran');
+    }
+
+    public function peminjaman(){
+        return $this->hasMany(PinjamRuang::class, 'id_user', 'id_user');
+    }
+
+    public function kendala(){
+        return $this->hasMany(LaporKendala::class, 'id_user', 'id_user');
     }
 }

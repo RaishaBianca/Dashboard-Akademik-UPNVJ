@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebAdminLab</title>
-    @vite('resources/js/app.js')
+    @viteReactRefresh
+    @vite('resources/js/app.jsx')
     @inertiaHead
 </head>
 <body>
     @inertia
-    @vite('resources/js/app.js')
-    @inertiaScripts
+    @vite('resources/js/app.jsx')
 </body>
 </html>

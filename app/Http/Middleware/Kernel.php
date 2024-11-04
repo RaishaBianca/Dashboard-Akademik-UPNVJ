@@ -14,6 +14,7 @@ class Kernel extends HttpKernel
     protected $middleware = [
         // Other global middleware
         \Fruitcake\Cors\HandleCors::class,
+        \App\Http\Middleware\VerifyCsrfToken::class,
     ];
 
     /**
@@ -24,9 +25,13 @@ class Kernel extends HttpKernel
     protected $middlewareGroups = [
         'web' => [
             // Other web middleware
+            \App\Http\Middleware\VerifyCsrfToken::class,
         ],
 
         'api' => [
+            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            'throttle:api',
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
 
@@ -38,5 +43,16 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'cors' => \Fruitcake\Cors\HandleCors::class,
         // Other route middleware
+        'auth' => \App\Http\Middleware\Authenticate::class,
+    'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+    'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
+    'can' => \Illuminate\Auth\Middleware\Authorize::class,
+    'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+    //verify csrf
+    'csrf' => \App\Http\Middleware\VerifyCsrfToken::class,
+    'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
+    'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
+    'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+    'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
 }

@@ -4,34 +4,37 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Ruangan;
+use App\Models\MataKuliah;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class PinjamRuang extends Model
+class JadwalMK extends Model
 {
     use HasFactory;
-    protected $table = 'pinjam_ruang';
-    protected $primaryKey = 'id_pinjam';
-    public $incrementing = true; 
-    protected $keyType = 'int'; 
+    protected $table = 'jadwal_mk';
     public $timestamps = false;
+    protected $primaryKey = 'id_jadwal';
+    public $incrementing = true;
+    protected $keyType = 'int';
     protected $fillable = [
-        'id_user',
+        'id_mk',
         'id_ruang',
-        'tgl_pinjam',
+        'id_dosen',
         'jam_mulai',
         'jam_selesai',
-        'keterangan',
-        'status',
-        'jumlah_orang'
+        'hari',
     ];
 
-    public function user()
+    public function mataKuliah()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(MataKuliah::class, 'id_mk');
     }
     public function ruangan()
     {
         return $this->belongsTo(Ruangan::class, 'id_ruang');
+    }
+    public function dosen()
+    {
+        return $this->belongsTo(User::class, 'id_user');
     }
 }

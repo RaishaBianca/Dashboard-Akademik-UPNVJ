@@ -18,12 +18,12 @@ return new class extends Migration
         });
 
         Schema::create('ruangan', function (Blueprint $table) {
-            $table->string('id_ruang', 30)->primary();
+            $table->string('id_ruang', 10)->primary();
             $table->string('id_gedung',10);
             $table->string('nama_ruang');
             $table->string('deskripsi');
-            $table->time('jam_mulai'); 
-            $table->time('jam_selesai');
+            $table->time('jam_buka'); 
+            $table->time('jam_tutup');
             $table->integer('kapasitas');
 
             $table->foreign('id_gedung')->references('id_gedung')->on('gedung');
@@ -31,13 +31,14 @@ return new class extends Migration
 
         Schema::create('pinjam_ruang', function (Blueprint $table) {
             $table->increments('id_pinjam');
-            $table->dateTime('tgl_pinjam');
+            $table->date('tgl_pinjam'); //consider making this a date instead 
             $table->string('id_user', 30);
-            $table->string('id_ruang', 30);
+            $table->string('id_ruang', 10);
             $table->time('jam_mulai');
             $table->time('jam_selesai');
             $table->string('keterangan');
             $table->string('status');
+            $table->integer('jumlah_orang');
 
             $table->foreign('id_user')->references('id_user')->on('user');
             $table->foreign('id_ruang')->references('id_ruang')->on('ruangan');
