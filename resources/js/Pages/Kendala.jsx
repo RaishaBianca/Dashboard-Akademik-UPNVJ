@@ -15,24 +15,24 @@ export default function Kendala(){
         fetchLaporanData();
     }, []);
 
-    const fetchLaporanData = async () => {
+    const fetchLaporanData = async (search = '') => {
         try {
-            const response = await fetch('/data-kendala');
+            const response = await fetch(`/data-kendala?search=${search}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-        const data = await response.json();
-        const formattedData = data.map(item => ({
-            id : item.id, 
-            pelapor : item.nama,
-            ruangan : item.lab,
-            jenis : item.jenis_kendala,
-            bentuk : item.bentuk_kendala,
-            deskripsi : item.deskripsi,
-            kon : item.status
-        }));
-        setLaporanData(formattedData);
-        }catch (error) {
+            const data = await response.json();
+            const formattedData = data.map(item => ({
+                id: item.id,
+                pelapor: item.nama,
+                ruangan: item.lab,
+                jenis: item.jenis_kendala,
+                bentuk: item.bentuk_kendala,
+                deskripsi: item.deskripsi,
+                kon: item.status
+            }));
+            setLaporanData(formattedData);
+        } catch (error) {
             console.error('Error fetching data:', error);
             setError('Failed to load data');
         } finally {
@@ -62,7 +62,7 @@ export default function Kendala(){
             <Tabs tabs={tabs} onTabChange={setActiveTab} />
             <div className='find-filter'>
             <div className='search-main'>
-                <input type="text" placeholder="  Search..." className='search-field-main' />
+            <input type="text" placeholder="Search..." className='search-field-main' onChange={(e) => fetchLaporanData(e.target.value)} />
                 <FontAwesomeIcon icon={faSearch} className='search-icon-main' />
             </div>
             <div className='filter'>

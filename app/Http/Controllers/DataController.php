@@ -19,7 +19,10 @@ class DataController extends Controller
                   ->orWhere('id_user', 'like', "%{$search}%");
             })->orWhereHas('ruangan', function ($q) use ($search) {
                 $q->where('nama_ruang', 'like', "%{$search}%");
-            })->orWhere('keterangan', 'like', "%{$search}%");
+            })->orWhere('keterangan', 'like', "%{$search}%")
+              ->orWhere('status', 'like', "%{$search}%")
+              ->orWhere('id_pinjam', 'like', "%{$search}%")
+              ->orWhere('tgl_pinjam', 'like', "%{$search}%");
         }
     
         $data_pinjam = $query->orderByRaw("CASE WHEN status = 'pending' THEN 0 ELSE 1 END, status")->get()->map(function($pinjam) {
@@ -37,32 +40,39 @@ class DataController extends Controller
         return response()->json($data_pinjam);
     }
 
-    public function getAllKendala()
+    public function getAllKendala(Request $request)
     {
-        try {
-            $data_kendala = LaporKendala::with(['user', 'ruangan', 'jenis_kendala', 'bentuk_kendala'])
-                ->orderByRaw('tgl_lapor DESC')
-                ->get()
-                ->map(function($kendala) {
-                    return [
-                        'id' => $kendala->id_lapor,
-                        'nama' => $kendala->user->nama,
-                        'lab' => $kendala->ruangan->nama_ruang,
-                        'jenis_kendala' => $kendala->jenis_kendala->nama_jenis_kendala,
-                        'bentuk_kendala' => $kendala->bentuk_kendala->nama_bentuk_kendala,
-                        'deskripsi' => $kendala->deskripsi_kendala,
-                        'status' => $kendala->status
-                    ];
-                });
-                
-            return response()->json($data_kendala);
-            
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Failed to fetch data',
-                'message' => $e->getMessage()
-            ], 500);
+        $query = LaporKendala::with(['user', 'ruangan', 'jenis_kendala', 'bentuk_kendala']);
+    
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->whereHas('user', function ($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                  ->orWhere('id_user', 'like', "%{$search}%");
+            })->orWhereHas('ruangan', function ($q) use ($search) {
+                $q->where('nama_ruang', 'like', "%{$search}%");
+            })->orWhereHas('jenis_kendala', function ($q) use ($search) {
+                $q->where('nama_jenis_kendala', 'like', "%{$search}%");
+            })->orWhereHas('bentuk_kendala', function ($q) use ($search) {
+                $q->where('nama_bentuk_kendala', 'like', "%{$search}%");
+            })->orWhere('deskripsi_kendala', 'like', "%{$search}%")
+              ->orWhere('status', 'like', "%{$search}%")
+              ->orWhere('id_lapor', 'like', "%{$search}%");
         }
+    
+        $data_kendala = $query->orderByRaw('tgl_lapor DESC')->get()->map(function($kendala) {
+            return [
+                'id' => $kendala->id_lapor,
+                'nama' => $kendala->user->nama,
+                'lab' => $kendala->ruangan->nama_ruang,
+                'jenis_kendala' => $kendala->jenis_kendala->nama_jenis_kendala,
+                'bentuk_kendala' => $kendala->bentuk_kendala->nama_bentuk_kendala,
+                'deskripsi' => $kendala->deskripsi_kendala,
+                'status' => $kendala->status
+            ];
+        });
+    
+        return response()->json($data_kendala);
     }
 
     public function getAllJadwal(){
