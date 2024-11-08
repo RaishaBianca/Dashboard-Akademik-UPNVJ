@@ -17,10 +17,10 @@ const Timetable =({columns, data}) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {Array.from({ length: 11 }, (_, i) => 
+                    {Array.from({ length: 11 }, (_, i, j) => 
                     (
                         <tr key={i}>
-                            <td>{i + 7}:00</td>
+                            <td>{(i + 7) < 10 ? '0' : ''}{i + 7}:{j === 0 ? '00' : '00'}</td>
                             <td>
                             </td>
                             <td className='filled'>

@@ -1,7 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\JadwalMK;
 use App\Models\PinjamRuang;
+use App\Models\LaporKendala;
 use Illuminate\Http\Request;
 
 class DataController extends Controller
@@ -20,7 +22,7 @@ class DataController extends Controller
                         'nim' => $pinjam->user->id_user,
                         'lab' => $pinjam->ruangan->nama_ruang,
                         'keterangan' => $pinjam->keterangan,
-                        'status' => $pinjam->status
+                        'status' => $pinjam->status,
                     ];
                 });
                 
@@ -60,5 +62,23 @@ class DataController extends Controller
                 'message' => $e->getMessage()
             ], 500);
         }
+    }
+
+    public function getAllJadwal(){
+        return $jadwal = JadwalMK::with(['ruangan', 'matakuliah', 'user'])
+            ->orderByRaw('hari ASC, jam_mulai ASC')->whereBetween('jam_mulai', ['07:00:00', '18:00:00'])->whereBetween('jam_selesai', ['07:00:00', '18:00:00'])
+            ->get()
+            ->map(function($jadwal) {
+                return [
+                    'id' => $jadwal->id_jadwal,
+                    'hari' => $jadwal->hari,
+                    'jam_mulai' => $jadwal->jam_mulai,
+                    'jam_selesai' => $jadwal->jam_selesai,
+                    'matakuliah' => $jadwal->matakuliah->nama_mk,
+                    'dosen' => $jadwal->user->nama,
+                    'nim' => $jadwal->user->id_user,
+                    'ruangan' => $jadwal->ruangan->nama_ruang
+                ];
+            });
     }
 }

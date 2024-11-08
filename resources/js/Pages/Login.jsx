@@ -9,21 +9,24 @@ const Login = () => {
         remember: false
     });
 
-    // Instead of direct form submission
-const handleSubmit = (e) => {
-    e.preventDefault();
-    post('/login', {
-        preserveScroll: true,
-        onSuccess: () => {
-            // Redirect to the dashboard
-            <Link href="/dashboard" />;
-        },
-        onError: (errors) => {
-            // Handle the errors
-            console.log(errors);
-        }
-    });
-};
+        const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        await axios.get('/sanctum/csrf-cookie');
+        
+        // Debug: Log the current CSRF token
+        console.log('CSRF Token:', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+        
+        post('/login', data, {
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            preserveScroll: true,
+            onSuccess: () => {
+                window.location.href = '/dashboard';
+            }
+        });
+    };
 
     return (
         <div id="LoginPage">

@@ -4,8 +4,40 @@ import CustomDatePicker from '../Partial/CustomDatePicker';
 import Timetable from '../Partial/Timetable';
 
 export default function Jadwal() {
-  const [activeTab, setActiveTab] = useState('tab1'); // Updated initial state to match tab ID
+  const [activeTab, setActiveTab] = useState('tab1'); 
+  const [jadwalData, setJadwalData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  useEffect(() => {
+    fetchJadwalData();
+  }, []);
+
+  const fetchJadwalData = async () => {
+    try {
+      const response = await fetch('/data-jadwal');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      const formattedData = data.map(item => ({
+        no: item.id,
+        nama: item.dosen,
+        nim: item.nim,
+        tanggal: item.hari,
+        waktu: item.waktu,
+        status: item.status,
+        aksi: item.aksi
+      }));
+      setJadwalData(formattedData);
+      
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      return [];
+    }
+  }
+
+  console.log(getJadwalData());
   const tabs = [
     {
       id: 'tab1',
@@ -23,51 +55,6 @@ export default function Jadwal() {
     {
       Header: 'No',
       accessor: 'no',
-    },
-    {
-      Header: 'Nama',
-      accessor: 'nama',
-    },
-    {
-      Header: 'NIM',
-      accessor: 'nim',
-    },
-    {
-      Header: 'Tanggal',
-      accessor: 'tanggal',
-    },
-    {
-      Header: 'Waktu',
-      accessor: 'waktu',
-    },
-    {
-      Header: 'Status',
-      accessor: 'status',
-    },
-    {
-      Header: 'Aksi',
-      accessor: 'aksi',
-    },
-  ];
-
-  const data = [
-    {
-      no: 1,
-      nama: 'John Doe',
-      nim: 'A11.2018.12345',
-      tanggal: '12/12/2021',
-      waktu: '08:00 - 10:00',
-      status: 'pending',
-      aksi: 'detail',
-    },
-    {
-      no: 2,
-      nama: 'Jane Doe',
-      nim: 'A11.2018.54321',
-      tanggal: '12/12/2021',
-      waktu: '10:00 - 12:00',
-      status: 'approved',
-      aksi: 'detail',
     },
   ];
 

@@ -70,10 +70,11 @@ const DataTable = ({ columns, data }) => {
                       </td>
                     );
                   }
+                  console.log(cell.value);
                   const { key, ...cellProps } = cell.getCellProps();
                   return <td key={cell.column.id} {...cellProps}>{cell.render('Cell')}</td>;
                 })}
-                <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>
+                <td style={{ textAlign: 'center', verticalAlign: 'middle' }} class="more">
                   <button className='more-button'><FontAwesomeIcon icon={faEllipsis} /></button>
                 </td>
               </tr>

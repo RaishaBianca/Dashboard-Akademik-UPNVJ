@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\JadwalMK;
 use App\Models\PeranUser;
 use App\Models\PinjamRuang;
 use App\Models\LaporKendala;
@@ -68,5 +69,9 @@ class User extends Authenticatable
 
     public function kendala(){
         return $this->hasMany(LaporKendala::class, 'id_user', 'id_user');
+    }
+
+    public function jadwal(){
+        return $this->hasMany(JadwalMK::class, 'id_dosen', 'id_user');
     }
 }

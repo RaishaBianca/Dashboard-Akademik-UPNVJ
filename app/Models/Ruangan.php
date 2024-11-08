@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Gedung;
+use App\Models\JadwalMK;
 use App\Models\PinjamRuang;
 use App\Models\LaporKendala;
 use Illuminate\Database\Eloquent\Model;
@@ -37,5 +38,8 @@ class Ruangan extends Model
     public function kendala()
     {
         return $this->hasMany(LaporKendala::class, 'id_ruang');
+    }
+    public function jadwal(){
+        return $this->hasMany(JadwalMK::class, 'id_ruang');
     }
 }

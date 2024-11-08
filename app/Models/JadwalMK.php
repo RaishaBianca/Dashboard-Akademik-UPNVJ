@@ -33,8 +33,8 @@ class JadwalMK extends Model
     {
         return $this->belongsTo(Ruangan::class, 'id_ruang');
     }
-    public function dosen()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(User::class, 'id_dosen', 'id_user');
     }
 }

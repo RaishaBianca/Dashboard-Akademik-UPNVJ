@@ -6,8 +6,10 @@ use App\Models\User;
 use App\Models\Admin;
 use App\Models\Ruangan;
 use Inertia\Controller;
-use App\Models\PinjamRuang;
+use App\Models\JadwalMK;
 
+use App\Models\MataKuliah;
+use App\Models\PinjamRuang;
 use App\Models\LaporKendala;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -127,7 +129,7 @@ class ApiController extends Controller
         $user = Admin::where('email', $request->email)->first(); 
 
         if ($user && Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Login successful'], 200);
+            return response()->json(['message' => 'Login successful', 'id_admin' => $user->id_admin], 200);
         }
 
         return response()->json(['message' => 'Login failed'], 404);
@@ -164,7 +166,7 @@ class ApiController extends Controller
     }
 
     public function getAllPeminjaman(){
-        $peminjaman = PinjamRuang::orderBy('id_pinjam', 'asc')->get()->map(function($peminjaman){
+        $peminjaman = PinjamRuang::orderBy('tgl_pinjam', 'asc')->get()->map(function($peminjaman){
             return [
                 'id' => $peminjaman->id_pinjam,
                 'nim' => $peminjaman->user->id_user,
@@ -182,11 +184,11 @@ class ApiController extends Controller
     }
 
     public function getAllKendala(){
-        $kendala = LaporKendala::all()->map(function($kendala){
+        $kendala = LaporKendala::all()->orderBy('tgl_lapor', 'asc')->get()->map(function($kendala){
             return [
                 'nama_pelapor' =>$kendala->user->nama,
                 'nim_nrp' => $kendala->user->id_user,
-                'tanggal' => $kendala->tgl_lapor,
+                'tanggal' => date('d/m/Y', strtotime($kendala->tgl_lapor)),
                 'nama_ruangan' => $kendala->ruangan->nama_ruang,
                 'jenis_kendala' => $kendala->jenis_kendala->nama_jenis_kendala,
                 'bentuk_kendala' => $kendala->bentuk_kendala->nama_bentuk_kendala,
@@ -194,7 +196,6 @@ class ApiController extends Controller
                 'status' => $kendala->status,
                 'tanggal_penyelesaian' => $kendala->tgl_penyelesaian,
                 'keterangan_penyelesaian' => $kendala->keterangan_penyelesaian,
-
             ];
         });
         return response()->json($kendala, 200);
@@ -238,6 +239,61 @@ class ApiController extends Controller
         $kendala->save();
 
         return response()->json(['message' => 'Kendala updated'], 200);
+    }
+
+    public function cekKetersediaanRuangan(Request $request)
+    {
+        $id_ruang = $request->id_ruang;
+        $start_time = $request->jam_mulai;
+        $end_time = $request->jam_selesai;
+        $date = $request->tgl_pinjam;
+    
+        $overlappingReservations = PinjamRuang::where('id_ruang', $id_ruang)
+            ->whereDate('tgl_pinjam', $date)
+            ->where(function ($query) use ($start_time, $end_time) {
+                $query->whereBetween('jam_mulai', [$start_time, $end_time])
+                    ->orWhereBetween('jam_selesai', [$start_time, $end_time])
+                    ->orWhere(function ($query) use ($start_time, $end_time) {
+                        $query->where('jam_mulai', '<=', $start_time)
+                              ->where('jam_selesai', '>=', $end_time);
+                    });
+            })
+            ->exists();
+    
+        $overlappingSchedules = JadwalMK::where('id_ruang', $id_ruang)
+            ->where('hari', date('l', strtotime($date))) 
+            ->where(function ($query) use ($start_time, $end_time) {
+                $query->whereBetween('jam_mulai', [$start_time, $end_time])
+                    ->orWhereBetween('jam_selesai', [$start_time, $end_time])
+                    ->orWhere(function ($query) use ($start_time, $end_time) {
+                        $query->where('jam_mulai', '<=', $start_time)
+                              ->where('jam_selesai', '>=', $end_time);
+                    });
+            })
+            ->exists();
+    
+        if ($overlappingReservations || $overlappingSchedules) {
+            return response()->json(['available' => false, 'message' => 'Ruangan tidak tersedia']);
+        } else {
+            return response()->json(['available' => true, 'message' => 'Ruangan tersedia']);
+        }
+    }
+
+    public function getJadwal(Request $request)
+    {
+        $jadwal = JadwalMK::with(['mataKuliah', 'ruangan', 'user'])->get()->map(function($jadwal) {
+            return [
+                'ruangan' => $jadwal->ruangan->nama_ruang,
+                'hari' => $jadwal->hari,
+                'jamMulai' => $jadwal->jam_mulai,
+                'jamSelesai' => $jadwal->jam_selesai,
+                'namaMatkul' => $jadwal->mataKuliah->nama_mk,
+                'kodeMatkul' => $jadwal->mataKuliah->id_mk,
+                'namaDosen' => $jadwal->user->nama,
+                'kodeDosen' => $jadwal->user->id_user,
+            ];
+        });
+        return response()->json($jadwal, 200);
     }
 }
 

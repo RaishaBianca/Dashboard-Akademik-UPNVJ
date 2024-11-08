@@ -14,9 +14,10 @@ export default function Konfirmasi() {
         fetchPeminjamanData();
     }, []);
 
-    const fetchPeminjamanData = async () => {
+        // In Konfirmasi.jsx
+    const fetchPeminjamanData = async (search = '') => {
         try {
-            const response = await fetch('/data-peminjaman');
+            const response = await fetch(`/data-peminjaman?search=${search}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -63,7 +64,7 @@ export default function Konfirmasi() {
                 <Tabs tabs={tabs} onTabChange={setActiveTab} />
                 <div className='find-filter'>
                     <div className='search-main'>
-                        <input type="text" placeholder="Search..." className='search-field-main' />
+                    <input type="text" placeholder="Search..." className='search-field-main' onChange={(e) => fetchPeminjamanData(e.target.value)} />
                         <FontAwesomeIcon icon={faSearch} className='search-icon-main' />
                     </div>
                     <div className='filter'>
