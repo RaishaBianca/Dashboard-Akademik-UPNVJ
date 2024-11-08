@@ -8,32 +8,33 @@ use Illuminate\Http\Request;
 
 class DataController extends Controller
 {
-    public function getAllPeminjaman()
+    public function getAllPeminjaman(Request $request)
     {
-        try {
-            $data_pinjam = PinjamRuang::with(['user', 'ruangan'])
-                ->orderByRaw('tgl_pinjam DESC')
-                ->get()
-                ->map(function($pinjam) {
-                    return [
-                        'id' => $pinjam->id_pinjam,
-                        'tanggal' => date('d/m/Y', strtotime($pinjam->tgl_pinjam)),
-                        'nama' => $pinjam->user->nama,
-                        'nim' => $pinjam->user->id_user,
-                        'lab' => $pinjam->ruangan->nama_ruang,
-                        'keterangan' => $pinjam->keterangan,
-                        'status' => $pinjam->status,
-                    ];
-                });
-                
-            return response()->json($data_pinjam);
-            
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Failed to fetch data',
-                'message' => $e->getMessage()
-            ], 500);
+        $query = PinjamRuang::with(['user', 'ruangan']);
+    
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->whereHas('user', function ($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                  ->orWhere('id_user', 'like', "%{$search}%");
+            })->orWhereHas('ruangan', function ($q) use ($search) {
+                $q->where('nama_ruang', 'like', "%{$search}%");
+            })->orWhere('keterangan', 'like', "%{$search}%");
         }
+    
+        $data_pinjam = $query->orderByRaw("CASE WHEN status = 'pending' THEN 0 ELSE 1 END, status")->get()->map(function($pinjam) {
+            return [
+                'id' => $pinjam->id_pinjam,
+                'tanggal' => date('d/m/Y', strtotime($pinjam->tgl_pinjam)),
+                'nama' => $pinjam->user->nama,
+                'nim' => $pinjam->user->id_user,
+                'lab' => $pinjam->ruangan->nama_ruang,
+                'keterangan' => $pinjam->keterangan,
+                'status' => $pinjam->status,
+            ];
+        });
+    
+        return response()->json($data_pinjam);
     }
 
     public function getAllKendala()
