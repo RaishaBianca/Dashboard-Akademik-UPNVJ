@@ -26,12 +26,13 @@ Route::post('/ketersediaan-ruangan', [ApiController::class, 'cekKetersediaanRuan
 
 
 //admin
-
 Route::get('/admin/peminjaman', [ApiController::class, 'getAllPeminjaman']);
 Route::get('/admin/kendala', [ApiController::class, 'getAllKendala']);
+Route::get('/admin/jadwal', [ApiController::class, 'getJadwal']);
 
 //accepts login admin 
 Route::post('/admin/login', [ApiController::class, 'loginAdmin']);
 Route::post('/admin/verifikasi_peminjaman', [ApiController::class, 'verifikasiPeminjaman']);
 Route::post('/admin/verifikasi_kendala', [ApiController::class, 'verifikasiKendala']);
-Route::get('/admin/jadwal', [ApiController::class, 'getJadwal']);
+
+Route::get('/admin/{id}', [ApiController::class, 'getAdmin']);

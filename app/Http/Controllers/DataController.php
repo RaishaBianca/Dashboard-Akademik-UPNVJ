@@ -13,16 +13,13 @@ class DataController extends Controller
         $query = PinjamRuang::with(['user', 'ruangan']);
     
         if ($request->has('search')) {
-            $search = $request->input('search');
+            $search = strtolower($request->input('search'));
             $query->whereHas('user', function ($q) use ($search) {
-                $q->where('nama', 'like', "%{$search}%")
+                $q->whereRaw('LOWER(nama) LIKE ?', ['%' . $search . '%'])
                   ->orWhere('id_user', 'like', "%{$search}%");
             })->orWhereHas('ruangan', function ($q) use ($search) {
-                $q->where('nama_ruang', 'like', "%{$search}%");
-            })->orWhere('keterangan', 'like', "%{$search}%")
-              ->orWhere('status', 'like', "%{$search}%")
-              ->orWhere('id_pinjam', 'like', "%{$search}%")
-              ->orWhere('tgl_pinjam', 'like', "%{$search}%");
+                $q->whereRaw('LOWER(nama_ruang) LIKE ?', ['%' . $search . '%']);
+            })->orWhereRaw('LOWER(keterangan) LIKE ?', ['%' . $search . '%']);
         }
     
         $data_pinjam = $query->orderByRaw("CASE WHEN status = 'pending' THEN 0 ELSE 1 END, status")->get()->map(function($pinjam) {
@@ -91,5 +88,13 @@ class DataController extends Controller
                     'ruangan' => $jadwal->ruangan->nama_ruang
                 ];
             });
+    }
+
+    public function getAllStats (){
+        $data = [
+            'total_peminjaman' => PinjamRuang::count(),
+            'total_kendala' => LaporKendala::count(),
+        ];
+        return response()->json($data);
     }
 }

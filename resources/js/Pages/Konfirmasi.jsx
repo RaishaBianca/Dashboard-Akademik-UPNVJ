@@ -64,7 +64,7 @@ export default function Konfirmasi() {
                 <Tabs tabs={tabs} onTabChange={setActiveTab} />
                 <div className='find-filter'>
                     <div className='search-main'>
-                    <input type="text" placeholder="Search..." className='search-field-main' onChange={(e) => fetchPeminjamanData(e.target.value)} />
+                    <input type="text" placeholder="Search..." className='search-field-main' onChange={(e) => fetchPeminjamanData(e.target.value.toLowerCase())} />
                         <FontAwesomeIcon icon={faSearch} className='search-icon-main' />
                     </div>
                     <div className='filter'>

@@ -67,6 +67,21 @@ class ApiController extends Controller
         return response()->json(['message' => 'User not found'], 404);
     }
 
+    public function getAdmin(Request $request)
+    {
+        $id = $request->id;
+        $admin = Admin::where('id_admin', $id)->first();
+        if ($admin) {
+           return $formattedAdmin = [
+                'id_admin' => $admin->id_admin,
+                'nama' => $admin->nama,
+                'email' => $admin->email
+            ];
+        }
+    
+        return response()->json(['message' => 'Admin not found'], 404);
+    }
+
     public function getRuangan(){
         $ruangan = Ruangan::all()->map(function($ruangan){
             return [
@@ -184,7 +199,7 @@ class ApiController extends Controller
     }
 
     public function getAllKendala(){
-        $kendala = LaporKendala::all()->orderBy('tgl_lapor', 'asc')->get()->map(function($kendala){
+        $kendala = LaporKendala::orderBy('tgl_lapor', 'asc')->get()->map(function($kendala){
             return [
                 'nama_pelapor' =>$kendala->user->nama,
                 'nim_nrp' => $kendala->user->id_user,

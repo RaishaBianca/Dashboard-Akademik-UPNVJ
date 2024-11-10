@@ -33,5 +33,6 @@ Route::get('/csrf-cookie', function (Request $request) {
 Route::get('/data-peminjaman', [DataController::class, 'getAllPeminjaman'])->name('data.peminjaman');
 Route::get('/data-kendala', [DataController::class, 'getAllKendala'])->name('data.kendala');
 Route::get('/data-jadwal', [DataController::class, 'getAllJadwal'])->name('data.jadwal');
+Route::get('/data-stat', [DataController::class, 'getAllStats'])->name('data.dashboard');
 
 
