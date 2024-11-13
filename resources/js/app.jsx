@@ -1,23 +1,28 @@
-import './bootstrap';
 import '../css/app.css';
-import { createInertiaApp } from '@inertiajs/react';
-import { createRoot } from 'react-dom/client';
-import Main from '@/Layouts/Main';
+import './bootstrap';
 
+import { createInertiaApp } from '@inertiajs/react';
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import { createRoot, hydrateRoot } from 'react-dom/client';
+
+const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({
-  resolve: name => {
-    const pages = import.meta.glob('./Pages/**/*.jsx', { eager: true });
-    let page = pages[`./Pages/${name}.jsx`];
+    title: (title) => `${title} - ${appName}`,
+    resolve: (name) =>
+        resolvePageComponent(
+            `./Pages/${name}.jsx`,
+            import.meta.glob('./Pages/**/*.jsx'),
+        ),
+    setup({ el, App, props }) {
+        if (import.meta.env.SSR) {
+            hydrateRoot(el, <App {...props} />);
+            return;
+        }
 
-    // Apply Main layout to all pages except Login
-    if (name !== 'Login') {
-      page.default.layout = page.default.layout || ((page) => <Main children={page} />);
-    }
-
-    return page;
-  },
-  setup({ el, App, props }) {
-    createRoot(el).render(<App {...props} />);
-  },
+        createRoot(el).render(<App {...props} />);
+    },
+    progress: {
+        color: '#4B5563',
+    },
 });

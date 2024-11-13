@@ -18,7 +18,7 @@ return [
     |
     */
 
-    'driver' => 'null',
+    'driver' => env('SESSION_DRIVER', 'database'),
 
     /*
     |--------------------------------------------------------------------------
@@ -73,12 +73,7 @@ return [
     |
     */
 
-    
-    'connection' => env('SESSION_CONNECTION', null),
-
-
-    'foreign_key' => 'id_user',
-    
+    'connection' => env('SESSION_CONNECTION'),
 
     /*
     |--------------------------------------------------------------------------
@@ -91,15 +86,7 @@ return [
     |
     */
 
-    'table' => 'sessions',
-    'columns' => [
-        'id' => 'id',
-        'user_id' => 'id_user', // Update this line
-        'ip_address' => 'ip_address',
-        'user_agent' => 'user_agent',
-        'payload' => 'payload',
-        'last_activity' => 'last_activity',
-    ],
+    'table' => env('SESSION_TABLE', 'sessions'),
 
     /*
     |--------------------------------------------------------------------------
@@ -169,7 +156,7 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN', null),
+    'domain' => env('SESSION_DOMAIN'),
 
     /*
     |--------------------------------------------------------------------------
@@ -182,7 +169,7 @@ return [
     |
     */
 
-    'secure' => env('SESSION_SECURE_COOKIE', false),
+    'secure' => env('SESSION_SECURE_COOKIE'),
 
     /*
     |--------------------------------------------------------------------------
