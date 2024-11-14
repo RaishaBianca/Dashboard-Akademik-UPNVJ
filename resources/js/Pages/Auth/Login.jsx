@@ -1,10 +1,11 @@
-import Checkbox from '@/Components/Checkbox';
+// import Checkbox from '@/Components/Checkbox';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
+import { Button, Checkbox, Input } from '@material-tailwind/react';
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -31,11 +32,12 @@ export default function Login({ status, canResetPassword }) {
                 </div>
             )}
 
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="email" value="Email" />
+            <h1 className="text-3xl font-medium text-gray-900">Log in</h1>
 
-                    <TextInput
+            <form onSubmit={submit} className='mt-8'>
+                <div>
+                    <Input
+                        label="Email"
                         id="email"
                         type="email"
                         name="email"
@@ -50,9 +52,9 @@ export default function Login({ status, canResetPassword }) {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
 
-                    <TextInput
+                    <Input
+                        label='Password'
                         id="password"
                         type="password"
                         name="password"
@@ -68,31 +70,21 @@ export default function Login({ status, canResetPassword }) {
                 <div className="mt-4 block">
                     <label className="flex items-center">
                         <Checkbox
+                            label='Remember me'
+                            color='blue'
                             name="remember"
                             checked={data.remember}
                             onChange={(e) =>
                                 setData('remember', e.target.checked)
                             }
                         />
-                        <span className="ms-2 text-sm text-gray-600">
-                            Remember me
-                        </span>
                     </label>
                 </div>
 
-                <div className="mt-4 flex items-center justify-end">
-                    {canResetPassword && (
-                        <Link
-                            href={route('password.request')}
-                            className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                        >
-                            Forgot your password?
-                        </Link>
-                    )}
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
+                <div className="mt-4 flex items-center justify-center">
+                    <Button type='submit' className='px-20' disabled={processing}>
                         Log in
-                    </PrimaryButton>
+                    </Button>
                 </div>
             </form>
         </GuestLayout>

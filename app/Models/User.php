@@ -17,10 +17,23 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $table = 'users';
+    public $timestamps = false;
+    protected $primaryKey = 'id_user';
+    public $incrementing = false;
+    protected $keyType = 'string';
+
     protected $fillable = [
-        'name',
+        'id_user',
+        'nama',
+        'no_tlp',
         'email',
         'password',
+        'id_peran',
+        'prodi',
+        'profil',
+        'dibuat_pada',
+        'dimodif_pada',
     ];
 
     /**
@@ -44,5 +57,9 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function user(){
+        return $this->belongsTo(Peran::class, 'id_peran', 'id_peran');
     }
 }

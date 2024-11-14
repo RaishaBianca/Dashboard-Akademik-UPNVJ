@@ -23,12 +23,18 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $peranIds = [3,4,5];
+        $prodiValues = ['Informatika','Sistem Informasi', 'Manajemen Informasi'];
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+            'id_user' => Str::random(30),
+            'nama' => $this->faker->name(),
+            'no_tlp' => $this->faker->phoneNumber(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'password' => Hash::make('password'),
+            'id_peran' => $this->faker->randomElement($peranIds),
+            'prodi' => $this->faker->randomElement($prodiValues),
+            'dibuat_pada' => now(),
+            'dimodif_pada' => now(),
         ];
     }
 
