@@ -62,4 +62,8 @@ class User extends Authenticatable
     public function user(){
         return $this->belongsTo(Peran::class, 'id_peran', 'id_peran');
     }
+
+    public function peran(){
+        return $this->belongsTo(Peran::class, 'id_peran', 'id_peran');
+    }
 }
