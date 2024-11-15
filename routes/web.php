@@ -20,10 +20,6 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 //     ]);
 // });
 
-// Route::get('/dashboard', function () {
-//     return Inertia::render('Dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::get('/', [AuthenticatedSessionController::class, 'create'])
     ->name('login');
 
@@ -44,5 +40,3 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout');
 });
-
-// require __DIR__.'/auth.php';
