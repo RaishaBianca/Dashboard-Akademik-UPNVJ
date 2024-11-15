@@ -11,8 +11,8 @@ class DaftarKonfirmasiController extends Controller
 {
     public function index()
     {
-        $dataPeminjamanRuangan = PinjamRuang::with(['user', 'ruangan'])->get();
-        $peminjamanRuangan = PeminjamanResource::collection($dataPeminjamanRuangan)->toJson();
+        $query = PinjamRuang::with(['user', 'ruangan'])->orderByRaw("CASE WHEN status = 'pending' THEN 0 ELSE 1 END, status")->get();
+        $peminjamanRuangan = PeminjamanResource::collection($query);
 
         // dd($dataPeminjamanRuangan);
         return Inertia::render('DaftarKonfirmasi/Index', [

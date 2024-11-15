@@ -43,12 +43,14 @@ export default function Sidebar() {
             Dashboard
           </ListItem>
         </Link>
-        <ListItem className={LIST_ITEM_STYLES}>
-          <ListItemPrefix>
-            <ChartBarIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Stat Peminjaman
-        </ListItem>
+        <Link href={route('statistik.index')}>
+          <ListItem className={LIST_ITEM_STYLES}>
+            <ListItemPrefix>
+              <ChartBarIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Stat Peminjaman
+          </ListItem>
+        </Link>
         <Link href={route('daftar-konfirmasi.index')}>
           <ListItem className={LIST_ITEM_STYLES}>
             <ListItemPrefix>
@@ -57,36 +59,36 @@ export default function Sidebar() {
             Daftar Konfirmasi
           </ListItem>
         </Link>
-        <ListItem className={LIST_ITEM_STYLES}>
-          <ListItemPrefix>
-            <CalendarDaysIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Jadwal Pemakaian
-        </ListItem>
-        <ListItem className={LIST_ITEM_STYLES}>
-          <ListItemPrefix>
-            <ExclamationCircleIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Pelaporan Kendala
-        </ListItem>
+        <Link href={route('jadwal-pemakaian.index')}>
+          <ListItem className={LIST_ITEM_STYLES}>
+            <ListItemPrefix>
+              <CalendarDaysIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Jadwal Pemakaian
+          </ListItem>
+        </Link>
+        <Link href={route('lapor-kendala.index')}>
+          <ListItem className={LIST_ITEM_STYLES}>
+            <ListItemPrefix>
+              <ExclamationCircleIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Pelaporan Kendala
+          </ListItem>
+        </Link>
       </List>
       <hr className="my-2 border-gray-200" />
       <List>
-        <ListItem className={LIST_ITEM_STYLES}>
-          <ListItemPrefix>
-            <ChatBubbleLeftEllipsisIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Help & Support
-        </ListItem>
-        <ListItem className={LIST_ITEM_STYLES}>
-          <ListItemPrefix>
-            <ArrowLeftStartOnRectangleIcon
-              strokeWidth={2.5}
-              className="h-5 w-5"
-            />
-          </ListItemPrefix>
-          Sign Out
-        </ListItem>
+        <Link href={route('logout')} method="post" as="button">
+            <ListItem className={LIST_ITEM_STYLES}>
+                <ListItemPrefix>
+                    <ArrowLeftStartOnRectangleIcon
+                    strokeWidth={2.5}
+                    className="h-5 w-5"
+                    />
+                </ListItemPrefix>
+                Sign Out
+            </ListItem>
+        </Link>
       </List>
     </Card>
   )

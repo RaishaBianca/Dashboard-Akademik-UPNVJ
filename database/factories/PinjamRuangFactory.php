@@ -22,7 +22,7 @@ class PinjamRuangFactory extends Factory
         return [
             'id_user'=> User::factory(),
             'id_ruang'=> $this->faker->randomElement($Ruanganids),
-            'tgl_pinjam'=> $this->faker->date(),
+            'tgl_pinjam'=> $this->faker->dateTimeBetween('-2 weeks', 'now'),
             'jam_mulai'=> $this->faker->time(),
             'jam_selesai'=> $this->faker->time(),
             'keterangan'=> $this->faker->text(),

@@ -93,14 +93,10 @@ export default function Table({ allData, columns}) {
         <tbody>
           {table.getRowModel().rows.map(row => {
             return (
-              <tr key={row.id}>
+              <tr key={row.id} className='odd:bg-white even:bg-gray-100 hover:bg-gray-200'>
                 {row.getVisibleCells().map(cell => {
                   return (
                     <td key={cell.id} className='border border-slate-700 px-3 text-sm max-w-24 truncate font-normal text-black py-2'>
-                      {/* {flexRender(
-                        cell.column.columnDef.cell, 
-                        cell.getContext()
-                      )} */}
                       <span className={`status-${cell.getValue()} status`}>
                         {flexRender(cell.column.columnDef.cell,cell.getContext())}
                       </span>

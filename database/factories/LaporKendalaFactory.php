@@ -29,7 +29,7 @@ class LaporKendalaFactory extends Factory
             'id_jenis_kendala' => $this->faker->randomElement($JenisKendalaID),
             'id_bentuk_kendala' => $this->faker->randomElement($BentukKendalaID),
             'id_ruang' => $this->faker->randomElement($RuanganID),
-            'tgl_lapor' => $this->faker->dateTime(),
+            'tgl_lapor' =>$this->faker->dateTimeBetween('-2 weeks', 'now'),
             'deskripsi_kendala' => $this->faker->text(),
             'status' => $this->faker->randomElement(['pending', 'approved', 'rejected']),
             'tgl_penyelesaian' => $this->faker->dateTime(),

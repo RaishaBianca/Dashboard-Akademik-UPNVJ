@@ -7,7 +7,7 @@ import { Typography } from "@material-tailwind/react";
 
 export default function Index({ peminjamanRuangan }) {
   console.log(peminjamanRuangan)
-  const dataPeminjamanLab = JSON.parse(peminjamanRuangan)
+  const dataPeminjamanLab = peminjamanRuangan.data
 
   const columnPeminjamanLab = React.useMemo(
     () => [
