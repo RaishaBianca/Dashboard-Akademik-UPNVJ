@@ -35,25 +35,43 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'id_peran' => 2,
+                'role' => 'admin_fakultas',
+                'nama_peran' => 'Admin Fakultas',
+                'deskripsi_peran' => 'Admin Mata Kuliah Prioritas 1',
+            ],
+            [
+                'id_peran' => 3,
+                'role' => 'admin_kelas',
+                'nama_peran' => 'Admin Kelas',
+                'deskripsi_peran' => 'Admin Mata Kuliah Prioritas 1',
+            ],
+            [
+                'id_peran' => 4,
+                'role' => 'admin_fakultas',
+                'nama_peran' => 'Admin Fakultas',
+                'deskripsi_peran' => 'Admin Mata Kuliah Prioritas 1',
+            ],
+            [
+                'id_peran' => 5,
                 'role' => 'super_admin',
                 'nama_peran' => 'Super Admin',
                 'deskripsi_peran' => 'Super Admin Mata Kuliah Prioritas 2',
             ],
             [
-                'id_peran' => 3,
-                'role' => 'user',
+                'id_peran' => 6,
+                'role' => 'user_dosen',
                 'nama_peran' => 'Dosen',
                 'deskripsi_peran' => 'Dosen Mata Kuliah Prioritas 1',
             ],
             [
-                'id_peran' => 4,
-                'role' => 'user',
+                'id_peran' => 7,
+                'role' => 'user_mahasiswa',
                 'nama_peran' => 'Mahasiswa',
                 'deskripsi_peran' => 'Mahasiswa Mata Kuliah Prioritas 2',
             ],
             [
-                'id_peran' => 5,
-                'role' => 'user',
+                'id_peran' => 8,
+                'role' => 'user_tendik',
                 'nama_peran' => 'Tendik',
                 'deskripsi_peran' => 'Tendik Mata Kuliah Prioritas 3',
             ],
@@ -81,6 +99,7 @@ class DatabaseSeeder extends Seeder
             [
                 'id_ruang' => 'A1',
                 'id_gedung' => 'A',
+                'tipe_ruang' => 'lab',
                 'nama_ruang' => 'Ruang A1',
                 'deskripsi' => 'Ruang A1 adalah ruangan yang berada di lantai 1 gedung A',
                 'jam_buka' => '07:00:00', // Start time
@@ -90,6 +109,7 @@ class DatabaseSeeder extends Seeder
             [
                 'id_ruang' => 'A2',
                 'id_gedung' => 'A',
+                'tipe_ruang' => 'lab',
                 'nama_ruang' => 'Ruang A2',
                 'deskripsi' => 'Ruang A2 adalah ruangan yang berada di lantai 2 gedung A',
                 'jam_buka' => '07:00:00', // Start time
@@ -99,6 +119,7 @@ class DatabaseSeeder extends Seeder
             [
                 'id_ruang' => 'B1',
                 'id_gedung' => 'B',
+                'tipe_ruang' => 'lab',
                 'nama_ruang' => 'Ruang B1',
                 'deskripsi' => 'Ruang B1 adalah ruangan yang berada di lantai 1 gedung B',
                 'jam_buka' => '07:00:00', // Start time
@@ -108,6 +129,7 @@ class DatabaseSeeder extends Seeder
             [
                 'id_ruang' => 'B2',
                 'id_gedung' => 'B',
+                'tipe_ruang' => 'kelas',
                 'nama_ruang' => 'Ruang B2',
                 'deskripsi' => 'Ruang B2 adalah ruangan yang berada di lantai 2 gedung B',
                 'jam_buka' => '07:00:00', // Start time
@@ -117,6 +139,7 @@ class DatabaseSeeder extends Seeder
             [
                 'id_ruang' => 'C1',
                 'id_gedung' => 'C',
+                'tipe_ruang' => 'kelas',
                 'nama_ruang' => 'Ruang C1',
                 'deskripsi' => 'Ruang C1 adalah ruangan yang berada di lantai 1 gedung C',
                 'jam_buka' => '07:00:00', // Start time

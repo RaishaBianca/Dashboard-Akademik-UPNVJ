@@ -14,6 +14,7 @@ class JadwalPemakaianController extends Controller
         $query = PinjamRuang::with('ruangan', 'user')
             ->where('status', 'approved')
             ->get();
+        
         $jadwalPemakaian = $query->map(function ($item) {
             return [
                 'title' => $item->user->nama .' - '. $item->ruangan->nama_ruang,

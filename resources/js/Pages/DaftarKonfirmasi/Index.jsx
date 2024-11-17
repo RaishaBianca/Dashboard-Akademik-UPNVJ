@@ -5,9 +5,10 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { Typography } from "@material-tailwind/react";
 
-export default function Index({ peminjamanRuangan }) {
+export default function Index({ peminjamanRuangan, peminjamanRuanganKelas }) {
   console.log(peminjamanRuangan)
   const dataPeminjamanLab = peminjamanRuangan.data
+  const dataPeminjamanKelas = peminjamanRuanganKelas.data
 
   const columnPeminjamanLab = React.useMemo(
     () => [
@@ -48,7 +49,7 @@ export default function Index({ peminjamanRuangan }) {
     {
       label: "Peminjaman Kelas",
       value: "peminjamanKelas",
-      desc: <Table allData={[]} columns={columnPeminjamanLab}/>,
+      desc: <Table allData={dataPeminjamanKelas} columns={columnPeminjamanLab}/>,
     }
   ]
   return (

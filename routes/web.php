@@ -38,5 +38,5 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
-    ->name('logout');
+        ->name('logout');
 });

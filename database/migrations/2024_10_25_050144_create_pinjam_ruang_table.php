@@ -20,6 +20,7 @@ return new class extends Migration
         Schema::create('ruangan', function (Blueprint $table) {
             $table->string('id_ruang', 10)->primary();
             $table->string('id_gedung',10);
+            $table->string('tipe_ruang');//lab , kelas
             $table->string('nama_ruang');
             $table->string('deskripsi');
             $table->time('jam_buka'); 

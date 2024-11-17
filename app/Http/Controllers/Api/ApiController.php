@@ -147,7 +147,11 @@ class ApiController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Login successful', 'id_admin' => $user->id_user], 200);
+            return response()->json([
+                'message' => 'Login successful',
+                'id_admin' => $user->id_user,
+                'token' => ''//token,
+            ], 200);
         }
 
         return response()->json(['message' => 'Login failed'], 404);
