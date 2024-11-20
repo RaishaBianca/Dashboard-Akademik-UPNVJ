@@ -20,10 +20,10 @@ class ApiController extends Controller
 
     public function login(Request $request)
     {
-        $user = User::where('email', $request->email)->first(); //consider creating an option to login with nim
+        $user = User::where('email', $request->email)->first(); 
 
         if ($user && Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Login successful'], 200);
+            return response()->json(['message' => 'Login successful', 'nim' => $user->id_user], 200);
         }
 
         return response()->json(['message' => 'Login failed'], 404);
@@ -52,7 +52,7 @@ class ApiController extends Controller
         $user->dimodif_pada = now();
         $user->save();
 
-        return response()->json(['message' => 'User created', 'user_id'=>$user->id_user], 200);
+        return response()->json(['message' => 'User created', 'nim'=>$user->id_user], 200);
     }
 
     public function getUser(Request $request)
@@ -129,12 +129,12 @@ class ApiController extends Controller
     public function createPeminjaman(Request $request){
         $peminjaman = new PinjamRuang();
         $peminjaman->id_ruang = $request->id_ruang;
-        $peminjaman->id_user = $request->nim;
+        $peminjaman->id_user = $request->id_user;
         $peminjaman->tgl_pinjam = $request->tgl_pinjam;
         $peminjaman->jam_mulai = $request->jam_mulai;
         $peminjaman->jam_selesai = $request->jam_selesai;
         $peminjaman->keterangan = $request->keterangan;
-        $peminjaman->jumlah_orang = $request->jumlah_orang;
+        $peminjaman->jumlah_orang = (int) $request->jumlah_orang; 
         $peminjaman->status = 'pending';
         $peminjaman->save();
         
